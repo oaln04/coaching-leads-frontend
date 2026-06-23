@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "coaching-leads-backend-production.up.railway.app"
+      "destination": "https://coaching-leads-backend-production.up.railway.app/api/:path*"
     }
   ]
 }
