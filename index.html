@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coaching Early Access</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #08090d;
+      --panel: #11141b;
+      --panel-strong: #171b24;
+      --text: #f5f7fb;
+      --muted: #a7afbf;
+      --line: #29303d;
+      --accent: #f6c96d;
+      --accent-strong: #ffd987;
+      --error: #ff8585;
+      --success: #8de0b7;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(246, 201, 109, 0.12), transparent 34rem),
+        linear-gradient(145deg, #08090d 0%, #0d1118 48%, #090b10 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .nav {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 28px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .brand {
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .main {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 78px 0 56px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.8fr);
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero {
+      max-width: 720px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 22px;
+      color: var(--accent-strong);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(3rem, 8vw, 7.1rem);
+      line-height: 0.94;
+      letter-spacing: 0;
+    }
+
+    .subheadline {
+      margin: 28px 0 0;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .cta {
+      margin-top: 36px;
+      border: 0;
+      border-radius: 999px;
+      padding: 15px 24px;
+      min-height: 52px;
+      background: var(--accent);
+      color: #15100a;
+      font: inherit;
+      font-weight: 850;
+      cursor: pointer;
+      box-shadow: 0 14px 34px rgba(246, 201, 109, 0.22);
+      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      background: var(--accent-strong);
+      box-shadow: 0 18px 42px rgba(246, 201, 109, 0.28);
+    }
+
+    .form-shell {
+      background: rgba(17, 20, 27, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 26px;
+      backdrop-filter: blur(18px);
+    }
+
+    .form-title {
+      margin: 0 0 4px;
+      font-size: 1.1rem;
+      font-weight: 850;
+    }
+
+    .form-note {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .field-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 650;
+    }
+
+    label {
+      color: #dfe4ee;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #0b0e14;
+      color: var(--text);
+      padding: 13px 14px;
+      font: inherit;
+      outline: none;
+      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(246, 201, 109, 0.82);
+      box-shadow: 0 0 0 4px rgba(246, 201, 109, 0.12);
+      background: #0d1119;
+    }
+
+    textarea {
+      min-height: 118px;
+      max-height: 220px;
+      resize: vertical;
+    }
+
+    .error-text {
+      min-height: 1.2em;
+      color: var(--error);
+      font-size: 0.86rem;
+    }
+
+    .submit {
+      width: 100%;
+      min-height: 52px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--text);
+      color: #090b10;
+      font: inherit;
+      font-weight: 850;
+      cursor: pointer;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .submit:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .submit:disabled {
+      cursor: not-allowed;
+      opacity: 0.68;
+    }
+
+    .status {
+      min-height: 1.45em;
+      margin: 16px 0 0;
+      font-weight: 720;
+    }
+
+    .status[data-state="success"] {
+      color: var(--success);
+    }
+
+    .status[data-state="error"] {
+      color: var(--error);
+    }
+
+    @media (max-width: 860px) {
+      .main {
+        grid-template-columns: 1fr;
+        padding-top: 58px;
+        gap: 42px;
+      }
+
+      .hero {
+        max-width: none;
+      }
+
+      .form-shell {
+        max-width: 640px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .nav,
+      .main {
+        width: min(100% - 28px, 1120px);
+      }
+
+      .nav {
+        padding-top: 20px;
+      }
+
+      .main {
+        padding-top: 48px;
+        padding-bottom: 36px;
+      }
+
+      .form-shell {
+        padding: 20px;
+      }
+
+      .field-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="nav" aria-label="Site">
+      <div class="brand">Early Access Coaching</div>
+      <div>Private launch list</div>
+    </header>
+
+    <main class="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow">Online coaching</p>
+        <h1 id="hero-title">Coaching is coming. Get early access.</h1>
+        <p class="subheadline">Be first to know when coaching opens, with launch details sent straight to your inbox.</p>
+        <button class="cta" type="button" data-scroll-target="#interest-form">Join the list</button>
+      </section>
+
+      <section class="form-shell" aria-labelledby="form-title">
+        <h2 class="form-title" id="form-title">Tell us where to reach you</h2>
+        <p class="form-note">A few details now, better timing later.</p>
+
+        <form id="interest-form" novalidate>
+          <div class="field">
+            <div class="field-row">
+              <label for="name">Full Name</label>
+            </div>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+            <div class="error-text" id="name-error" aria-live="polite"></div>
+          </div>
+
+          <div class="field">
+            <div class="field-row">
+              <label for="email">Email</label>
+            </div>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+            <div class="error-text" id="email-error" aria-live="polite"></div>
+          </div>
+
+          <div class="field">
+            <div class="field-row">
+              <label for="age">Age</label>
+            </div>
+            <input id="age" name="age" type="number" min="16" inputmode="numeric" required>
+            <div class="error-text" id="age-error" aria-live="polite"></div>
+          </div>
+
+          <div class="field">
+            <div class="field-row">
+              <label for="goal">What do you want to improve?</label>
+              <span id="goal-count">0/300</span>
+            </div>
+            <textarea id="goal" name="goal" maxlength="300"></textarea>
+            <div class="error-text" id="goal-error" aria-live="polite"></div>
+          </div>
+
+          <button class="submit" type="submit">Request early access</button>
+          <p class="status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const form = document.querySelector("#interest-form");
+    const submitButton = form.querySelector(".submit");
+    const statusEl = document.querySelector("#form-status");
+    const goalEl = document.querySelector("#goal");
+    const goalCountEl = document.querySelector("#goal-count");
+    const fields = {
+      name: document.querySelector("#name"),
+      email: document.querySelector("#email"),
+      age: document.querySelector("#age"),
+      goal: goalEl,
+    };
+    const errors = {
+      name: document.querySelector("#name-error"),
+      email: document.querySelector("#email-error"),
+      age: document.querySelector("#age-error"),
+      goal: document.querySelector("#goal-error"),
+    };
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function setStatus(message, state) {
+      statusEl.textContent = message;
+      statusEl.dataset.state = state || "";
+    }
+
+    function setError(field, message) {
+      errors[field].textContent = message || "";
+    }
+
+    function validateForm() {
+      const data = {
+        name: fields.name.value.trim(),
+        email: fields.email.value.trim(),
+        age: Number(fields.age.value),
+        goal: fields.goal.value.trim(),
+      };
+      let valid = true;
+
+      Object.keys(errors).forEach((field) => setError(field, ""));
+
+      if (!data.name) {
+        setError("name", "Enter your full name.");
+        valid = false;
+      }
+
+      if (!isValidEmail(data.email)) {
+        setError("email", "Enter a valid email address.");
+        valid = false;
+      }
+
+      if (!Number.isInteger(data.age) || data.age < 16) {
+        setError("age", "Enter an age of 16 or older.");
+        valid = false;
+      }
+
+      if (data.goal.length > 300) {
+        setError("goal", "Keep this to 300 characters or fewer.");
+        valid = false;
+      }
+
+      return { valid, data };
+    }
+
+    document.querySelector("[data-scroll-target]").addEventListener("click", (event) => {
+      const target = document.querySelector(event.currentTarget.dataset.scrollTarget);
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      fields.name.focus({ preventScroll: true });
+    });
+
+    goalEl.addEventListener("input", () => {
+      goalCountEl.textContent = `${goalEl.value.length}/300`;
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setStatus("", "");
+
+      const { valid, data } = validateForm();
+      if (!valid) {
+        return;
+      }
+
+      const payload = {
+        name: data.name,
+        email: data.email,
+        age: data.age,
+      };
+
+      if (data.goal) {
+        payload.goal = data.goal;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Joining...";
+
+      try {
+        const response = await fetch("/api/subscribe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(result.error?.message || "Submission failed. Please try again.");
+        }
+
+        form.reset();
+        goalCountEl.textContent = "0/300";
+        Object.keys(errors).forEach((field) => setError(field, ""));
+        setStatus("You're on the list. We'll be in touch.", "success");
+      } catch (error) {
+        setStatus(error.message || "Submission failed. Please try again.", "error");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Request early access";
+      }
+    });
+  </script>
+</body>
+</html>
