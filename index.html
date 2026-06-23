@@ -73,6 +73,12 @@
     .brand {
       color: var(--primary);
       font-weight: 800;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .brand:hover {
+      color: var(--body);
     }
 
     .nav-label,
@@ -490,8 +496,7 @@
 <body>
   <div class="page">
     <header class="nav" aria-label="Site">
-      <div class="brand">Omar Al Nuaimi</div>
-      <div class="nav-label">Physique coaching</div>
+      <a class="brand" href="admin.html" aria-label="Open admin subscribers page">Omar Al Nuaimi</a>
     </header>
 
     <main class="main">

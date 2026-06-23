@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Subscribers | Omar Al Nuaimi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --background: #080808;
+      --surface: #111111;
+      --input: #0d0d0d;
+      --border: #1e1e1e;
+      --border-soft: #1a1a1a;
+      --primary: #ffffff;
+      --secondary: #888888;
+      --muted: #666666;
+      --body: #aaaaaa;
+      --error: #ff6b6b;
+      --success: #d9f8df;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      cursor: default;
+      background:
+        radial-gradient(circle at 80% 12%, rgba(255, 255, 255, 0.055), transparent 30rem),
+        var(--background);
+      color: var(--primary);
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    a,
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      width: min(1200px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 32px 0 80px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 86px;
+    }
+
+    .brand,
+    .back-link {
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .back-link {
+      color: var(--secondary);
+      font-weight: 700;
+    }
+
+    .brand:hover,
+    .back-link:hover {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(340px, 0.55fr);
+      gap: clamp(48px, 8vw, 112px);
+      align-items: start;
+      margin-bottom: 48px;
+    }
+
+    .eyebrow,
+    label,
+    th {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-family: "Bebas Neue", "Inter", sans-serif;
+      font-size: clamp(5rem, 11vw, 10rem);
+      font-weight: 400;
+      line-height: 0.9;
+      letter-spacing: 0;
+    }
+
+    .subcopy {
+      max-width: 520px;
+      margin: 24px 0 0;
+      color: var(--body);
+      font-size: 17px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 110px),
+        var(--surface);
+      padding: 32px;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    .auth-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      background: var(--input);
+      color: var(--primary);
+      padding: 14px 16px;
+      font: inherit;
+      font-size: 15px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      background: #101010;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    button {
+      min-height: 48px;
+      border: 0;
+      border-radius: 8px;
+      padding: 0 18px;
+      background: var(--primary);
+      color: #000000;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      transition: background 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover:not(:disabled) {
+      background: #f0f0f0;
+      box-shadow: 0 0 32px rgba(255, 255, 255, 0.16);
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.62;
+    }
+
+    .ghost {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--body);
+    }
+
+    .ghost:hover:not(:disabled) {
+      background: #151515;
+      box-shadow: none;
+      color: var(--primary);
+    }
+
+    .status {
+      min-height: 1.4em;
+      margin: 12px 0 0;
+      color: var(--secondary);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .status[data-state="error"] {
+      color: var(--error);
+    }
+
+    .status[data-state="success"] {
+      color: var(--success);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 0 0 24px;
+    }
+
+    .stat {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(17, 17, 17, 0.72);
+      padding: 18px;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--primary);
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .table-shell {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+    }
+
+    table {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--border-soft);
+      padding: 16px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    td {
+      color: var(--body);
+      font-size: 14px;
+    }
+
+    .name {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .email {
+      color: #d8d8d8;
+    }
+
+    .goal {
+      max-width: 320px;
+      color: var(--secondary);
+    }
+
+    .empty {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      padding: 32px;
+      color: var(--secondary);
+      text-align: center;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        margin-bottom: 40px;
+      }
+
+      .nav {
+        margin-bottom: 56px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: min(100% - 32px, 1200px);
+        padding-top: 24px;
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      h1 {
+        font-size: 17vw;
+      }
+
+      .card {
+        border-radius: 12px;
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="nav" aria-label="Admin navigation">
+      <a class="brand" href="index.html">Omar Al Nuaimi</a>
+      <a class="back-link" href="index.html">Back to landing page</a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="admin-title">
+        <div>
+          <p class="eyebrow">Private list</p>
+          <h1 id="admin-title">Subscriber dashboard.</h1>
+          <p class="subcopy">Enter your admin token to view the coaching waitlist. The token is kept in this browser tab only and is never stored in the code.</p>
+        </div>
+
+        <section class="card" aria-labelledby="token-title">
+          <p class="eyebrow" id="token-title">Admin access</p>
+          <form class="auth-form" id="token-form">
+            <label for="admin-token">Admin token</label>
+            <input id="admin-token" name="admin-token" type="password" autocomplete="off" required>
+            <div class="actions">
+              <button type="submit" id="load-button">View subscribers</button>
+              <button class="ghost" type="button" id="clear-button">Clear token</button>
+            </div>
+          </form>
+          <p class="status" id="admin-status" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+
+      <section id="dashboard" hidden>
+        <div class="stats">
+          <div class="stat">
+            <span>Total subscribers</span>
+            <strong id="total-count">0</strong>
+          </div>
+          <div class="stat">
+            <span>Average age</span>
+            <strong id="average-age">--</strong>
+          </div>
+          <div class="stat">
+            <span>Latest signup</span>
+            <strong id="latest-signup">--</strong>
+          </div>
+        </div>
+
+        <div class="table-shell" id="table-shell" hidden>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Goal</th>
+                <th>Signed up</th>
+              </tr>
+            </thead>
+            <tbody id="subscribers-body"></tbody>
+          </table>
+        </div>
+
+        <div class="empty" id="empty-state" hidden>No subscribers yet.</div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const tokenForm = document.querySelector("#token-form");
+    const tokenInput = document.querySelector("#admin-token");
+    const loadButton = document.querySelector("#load-button");
+    const clearButton = document.querySelector("#clear-button");
+    const statusEl = document.querySelector("#admin-status");
+    const dashboard = document.querySelector("#dashboard");
+    const totalCountEl = document.querySelector("#total-count");
+    const averageAgeEl = document.querySelector("#average-age");
+    const latestSignupEl = document.querySelector("#latest-signup");
+    const subscribersBody = document.querySelector("#subscribers-body");
+    const tableShell = document.querySelector("#table-shell");
+    const emptyState = document.querySelector("#empty-state");
+
+    function setStatus(message, state) {
+      statusEl.textContent = message;
+      statusEl.dataset.state = state || "";
+    }
+
+    function formatDate(value) {
+      if (!value) {
+        return "--";
+      }
+
+      return new Intl.DateTimeFormat(undefined, {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }).format(new Date(value));
+    }
+
+    function renderSubscribers(subscribers) {
+      subscribersBody.replaceChildren();
+      totalCountEl.textContent = String(subscribers.length);
+
+      if (subscribers.length === 0) {
+        averageAgeEl.textContent = "--";
+        latestSignupEl.textContent = "--";
+        tableShell.hidden = true;
+        emptyState.hidden = false;
+        dashboard.hidden = false;
+        return;
+      }
+
+      const averageAge = subscribers.reduce((sum, subscriber) => sum + Number(subscriber.age || 0), 0) / subscribers.length;
+      averageAgeEl.textContent = String(Math.round(averageAge));
+      latestSignupEl.textContent = formatDate(subscribers[0].created_at);
+
+      subscribers.forEach((subscriber) => {
+        const row = document.createElement("tr");
+        const cells = [
+          { value: subscriber.name, className: "name" },
+          { value: subscriber.email, className: "email" },
+          { value: subscriber.age },
+          { value: subscriber.goal || "No goal shared", className: "goal" },
+          { value: formatDate(subscriber.created_at) },
+        ];
+
+        cells.forEach((cell) => {
+          const td = document.createElement("td");
+          td.textContent = cell.value;
+          if (cell.className) {
+            td.className = cell.className;
+          }
+          row.append(td);
+        });
+
+        subscribersBody.append(row);
+      });
+
+      tableShell.hidden = false;
+      emptyState.hidden = true;
+      dashboard.hidden = false;
+    }
+
+    async function loadSubscribers(token) {
+      setStatus("", "");
+      loadButton.disabled = true;
+      loadButton.textContent = "Loading...";
+
+      try {
+        const response = await fetch("/api/subscribers", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(result.error?.message || "Could not load subscribers.");
+        }
+
+        sessionStorage.setItem("coachingAdminToken", token);
+        renderSubscribers(result.subscribers || []);
+        setStatus("Subscribers loaded.", "success");
+      } catch (error) {
+        dashboard.hidden = true;
+        setStatus(error.message || "Could not load subscribers.", "error");
+      } finally {
+        loadButton.disabled = false;
+        loadButton.textContent = "View subscribers";
+      }
+    }
+
+    tokenForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const token = tokenInput.value.trim();
+
+      if (!token) {
+        setStatus("Enter your admin token.", "error");
+        return;
+      }
+
+      loadSubscribers(token);
+    });
+
+    clearButton.addEventListener("click", () => {
+      sessionStorage.removeItem("coachingAdminToken");
+      tokenInput.value = "";
+      dashboard.hidden = true;
+      setStatus("Token cleared.", "success");
+      tokenInput.focus();
+    });
+
+    const savedToken = sessionStorage.getItem("coachingAdminToken");
+    if (savedToken) {
+      tokenInput.value = savedToken;
+      loadSubscribers(savedToken);
+    }
+  </script>
+</body>
+</html>
