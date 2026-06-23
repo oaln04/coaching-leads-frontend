@@ -4,20 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Omar Al Nuaimi Coaching</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       color-scheme: dark;
-      --bg: #08090d;
-      --panel: #11141b;
-      --panel-strong: #171b24;
-      --text: #f5f7fb;
-      --muted: #a7afbf;
-      --line: #29303d;
-      --accent: #f6c96d;
-      --accent-strong: #ffd987;
-      --error: #ff8585;
-      --success: #8de0b7;
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      --background: #080808;
+      --surface: #111111;
+      --input: #0d0d0d;
+      --border: #1e1e1e;
+      --border-soft: #1a1a1a;
+      --primary: #ffffff;
+      --secondary: #888888;
+      --muted: #666666;
+      --body: #aaaaaa;
+      --accent: #c9a84c;
+      --error: #ff6b6b;
+      --success: #d9f8df;
     }
 
     * {
@@ -26,138 +30,169 @@
 
     html {
       scroll-behavior: smooth;
+      background: var(--background);
     }
 
     body {
       margin: 0;
       min-height: 100vh;
+      cursor: default;
       background:
-        radial-gradient(circle at top left, rgba(246, 201, 109, 0.12), transparent 34rem),
-        linear-gradient(145deg, #08090d 0%, #0d1118 48%, #090b10 100%);
-      color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        radial-gradient(circle at 76% 16%, rgba(255, 255, 255, 0.055), transparent 31rem),
+        radial-gradient(circle at 8% 86%, rgba(201, 168, 76, 0.08), transparent 28rem),
+        var(--background);
+      color: var(--primary);
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.5;
     }
 
-    a {
-      color: inherit;
+    a,
+    button {
+      cursor: pointer;
     }
 
     .page {
       min-height: 100vh;
       display: grid;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: auto 1fr auto;
     }
 
     .nav {
-      width: min(1120px, calc(100% - 40px));
+      width: min(1200px, calc(100% - 48px));
       margin: 0 auto;
-      padding: 28px 0 0;
+      padding: 32px 0 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: var(--muted);
-      font-size: 0.9rem;
+      gap: 24px;
+      color: var(--secondary);
+      font-size: 13px;
+      letter-spacing: 0.02em;
     }
 
     .brand {
-      color: var(--text);
+      color: var(--primary);
       font-weight: 800;
-      letter-spacing: 0;
+    }
+
+    .nav-label,
+    .eyebrow,
+    label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
     }
 
     .main {
-      width: min(1120px, calc(100% - 40px));
+      width: min(1200px, calc(100% - 48px));
+      min-height: calc(100svh - 74px);
       margin: 0 auto;
-      padding: 78px 0 56px;
+      padding: 72px 0 120px;
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.8fr);
-      gap: 56px;
+      grid-template-columns: minmax(0, 55fr) minmax(380px, 45fr);
+      gap: clamp(48px, 7vw, 96px);
       align-items: center;
     }
 
     .hero {
-      max-width: 720px;
+      min-width: 0;
+      padding: 48px 0;
     }
 
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
       margin: 0 0 22px;
-      color: var(--accent-strong);
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 32px;
-      height: 1px;
-      background: currentColor;
     }
 
     h1 {
+      max-width: 720px;
       margin: 0;
-      max-width: 760px;
-      font-size: clamp(3rem, 8vw, 7.1rem);
-      line-height: 0.94;
+      font-family: "Bebas Neue", "Inter", sans-serif;
+      font-size: clamp(5.2rem, 10.8vw, 10.8rem);
+      font-weight: 400;
+      line-height: 0.9;
       letter-spacing: 0;
+      color: var(--primary);
+      text-wrap: balance;
+    }
+
+    h1 .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: word-rise 0.8s ease-out forwards;
+      animation-delay: calc(var(--i) * 70ms);
     }
 
     .subheadline {
-      margin: 28px 0 0;
-      max-width: 620px;
-      color: var(--muted);
-      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      max-width: 520px;
+      margin: 30px 0 0;
+      color: var(--body);
+      font-size: clamp(16px, 1.45vw, 18px);
     }
 
     .tiktok-link {
+      position: relative;
       display: inline-block;
-      margin-top: 18px;
-      color: #d9dee8;
-      font-weight: 700;
-      text-decoration: underline;
-      text-decoration-color: rgba(217, 222, 232, 0.42);
-      text-underline-offset: 5px;
-      transition: color 160ms ease, text-decoration-color 160ms ease;
+      margin-top: 22px;
+      color: var(--secondary);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .tiktok-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -4px;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
     }
 
     .tiktok-link:hover {
-      color: var(--text);
-      text-decoration-color: currentColor;
+      color: var(--primary);
+    }
+
+    .tiktok-link:hover::after {
+      transform: scaleX(1);
     }
 
     .cta {
-      margin-top: 36px;
-      border: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      margin-top: 38px;
+      border: 1px solid rgba(201, 168, 76, 0.42);
       border-radius: 999px;
-      padding: 15px 24px;
-      min-height: 52px;
+      padding: 0 24px;
       background: var(--accent);
-      color: #15100a;
+      color: #080808;
       font: inherit;
-      font-weight: 850;
-      cursor: pointer;
-      box-shadow: 0 14px 34px rgba(246, 201, 109, 0.22);
-      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+      font-size: 15px;
+      font-weight: 800;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
     }
 
     .cta:hover {
-      transform: translateY(-2px);
-      background: var(--accent-strong);
-      box-shadow: 0 18px 42px rgba(246, 201, 109, 0.28);
+      background: #d8b85c;
+      box-shadow: 0 0 36px rgba(201, 168, 76, 0.28);
+      transform: translateY(-1px);
     }
 
     .lead-panel {
       display: grid;
-      gap: 20px;
-    }
-
-    .social-proof {
-      color: #e7ebf3;
+      gap: 28px;
+      opacity: 0;
+      transform: scale(0.98);
+      animation: card-in 0.8s ease-out 0.3s forwards;
     }
 
     .social-proof ul {
@@ -169,32 +204,40 @@
     }
 
     .social-proof li {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      color: #dce2ec;
-      font-weight: 720;
+      margin: 0;
+      border-left: 2px solid #333333;
+      padding-left: 12px;
+      color: var(--body);
+      font-size: 15px;
+      font-weight: 600;
     }
 
     .form-shell {
-      background: rgba(17, 20, 27, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-      padding: 26px;
-      backdrop-filter: blur(18px);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 110px),
+        var(--surface);
+      padding: 40px;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
     }
 
     .form-title {
-      margin: 0 0 4px;
-      font-size: 1.1rem;
-      font-weight: 850;
+      margin: 0;
+      color: var(--primary);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
 
     .form-note {
-      margin: 0 0 24px;
-      color: var(--muted);
-      font-size: 0.95rem;
+      max-width: 420px;
+      margin: 8px 0 30px;
+      color: var(--secondary);
+      font-size: 15px;
     }
 
     .field {
@@ -205,35 +248,41 @@
 
     .field-row {
       display: flex;
+      align-items: center;
       justify-content: space-between;
       gap: 14px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 650;
     }
 
-    label {
-      color: #dfe4ee;
+    #goal-count {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      transition: color 0.2s ease;
+    }
+
+    #goal-count.near-limit {
+      color: var(--error);
     }
 
     input,
     textarea {
       width: 100%;
-      border: 1px solid var(--line);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      background: #0b0e14;
-      color: var(--text);
-      padding: 13px 14px;
-      font: inherit;
       outline: none;
-      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      background: var(--input);
+      color: var(--primary);
+      padding: 14px 16px;
+      font: inherit;
+      font-size: 15px;
+      transition: border-color 0.2s ease, background 0.2s ease;
     }
 
     input:focus,
     textarea:focus {
-      border-color: rgba(246, 201, 109, 0.82);
-      box-shadow: 0 0 0 4px rgba(246, 201, 109, 0.12);
-      background: #0d1119;
+      border-color: var(--primary);
+      background: #101010;
     }
 
     textarea {
@@ -245,39 +294,48 @@
     .error-text {
       min-height: 1.2em;
       color: var(--error);
-      font-size: 0.86rem;
+      font-size: 13px;
     }
 
     .submit {
       width: 100%;
-      min-height: 52px;
+      min-height: 54px;
       border: 0;
       border-radius: 8px;
-      background: var(--text);
-      color: #090b10;
+      background: var(--primary);
+      color: #000000;
+      padding: 16px;
       font: inherit;
-      font-weight: 850;
-      cursor: pointer;
-      transition: opacity 160ms ease, transform 160ms ease;
+      font-size: 15px;
+      font-weight: 800;
+      transition: background 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
     }
 
     .submit:hover:not(:disabled) {
+      background: #f0f0f0;
+      box-shadow: 0 0 32px rgba(255, 255, 255, 0.18);
       transform: translateY(-1px);
     }
 
     .submit:disabled {
       cursor: not-allowed;
-      opacity: 0.68;
+      opacity: 0.62;
     }
 
     .status {
       min-height: 1.45em;
-      margin: 16px 0 0;
-      font-weight: 720;
+      margin: 18px 0 0;
+      color: var(--secondary);
+      font-size: 14px;
+      font-weight: 600;
     }
 
     .status[data-state="success"] {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
       color: var(--success);
+      animation: status-in 0.4s ease-out both;
     }
 
     .status[data-state="error"] {
@@ -290,62 +348,141 @@
       text-underline-offset: 4px;
     }
 
+    .success-icon {
+      display: inline-flex;
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+    }
+
+    .success-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
     .footer {
-      width: min(1120px, calc(100% - 40px));
-      margin: 0 auto;
-      padding: 0 0 30px;
-      color: var(--muted);
-      font-size: 0.92rem;
+      border-top: 1px solid var(--border-soft);
+      padding: 24px;
+      color: #444444;
+      font-size: 13px;
+      text-align: center;
     }
 
     .footer a {
-      color: #d9dee8;
+      color: #555555;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer a:hover {
+      color: var(--primary);
       text-decoration: underline;
-      text-decoration-color: rgba(217, 222, 232, 0.42);
       text-underline-offset: 4px;
     }
 
-    @media (max-width: 860px) {
+    @keyframes word-rise {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes card-in {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes status-in {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 1ms !important;
+      }
+    }
+
+    @media (max-width: 900px) {
       .main {
         grid-template-columns: 1fr;
-        padding-top: 58px;
-        gap: 42px;
+        align-items: start;
+      }
+
+      h1 {
+        max-width: 820px;
+      }
+
+      .lead-panel {
+        width: min(100%, 620px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav,
+      .main {
+        width: min(100% - 48px, 1200px);
+      }
+
+      .main {
+        min-height: auto;
+        padding: 58px 0 120px;
+        gap: 56px;
       }
 
       .hero {
-        max-width: none;
+        padding: 24px 0 0;
       }
 
-      .lead-panel,
+      h1 {
+        font-size: 15vw;
+      }
+
       .form-shell {
-        max-width: 640px;
+        width: 100%;
+        border-radius: 12px;
+        padding: 32px 24px;
       }
     }
 
     @media (max-width: 520px) {
-      .nav,
-      .main,
-      .footer {
-        width: min(100% - 28px, 1120px);
-      }
-
       .nav {
-        padding-top: 20px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
       }
 
       .main {
-        padding-top: 48px;
-        padding-bottom: 36px;
+        padding-top: 46px;
       }
 
-      .form-shell {
-        padding: 20px;
+      .subheadline {
+        margin-top: 24px;
       }
 
       .field-row {
         align-items: flex-start;
         flex-direction: column;
-        gap: 4px;
+        gap: 6px;
+      }
+
+      #goal-count {
+        align-self: flex-end;
       }
     }
   </style>
@@ -354,15 +491,23 @@
   <div class="page">
     <header class="nav" aria-label="Site">
       <div class="brand">Omar Al Nuaimi</div>
-      <div>Physique coaching</div>
+      <div class="nav-label">Physique coaching</div>
     </header>
 
     <main class="main">
       <section class="hero" aria-labelledby="hero-title">
-        <p class="eyebrow">Physique coaching</p>
-        <h1 id="hero-title">I transform physiques. I can transform yours.</h1>
-        <p class="subheadline">I'm Omar — I've spent years studying what actually works when it comes to building a body you're proud of. No fluff, no fads. Just real results. Coaching is coming. Get on the list before spots fill up.</p>
-        <a class="tiktok-link" href="https://www.tiktok.com/@oaln04" target="_blank" rel="noreferrer">See my work → @oaln04</a>
+        <p class="eyebrow">Online physique coaching</p>
+        <h1 id="hero-title" aria-label="I transform physiques. I can transform yours.">
+          <span class="word" style="--i: 0">I</span>
+          <span class="word" style="--i: 1">transform</span>
+          <span class="word" style="--i: 2">physiques.</span>
+          <span class="word" style="--i: 3">I</span>
+          <span class="word" style="--i: 4">can</span>
+          <span class="word" style="--i: 5">transform</span>
+          <span class="word" style="--i: 6">yours.</span>
+        </h1>
+        <p class="subheadline">I'm Omar &mdash; I've spent years studying what actually works when it comes to building a body you're proud of. No fluff, no fads. Just real results. Coaching is coming. Get on the list before spots fill up.</p>
+        <a class="tiktok-link" href="https://www.tiktok.com/@oaln04" target="_blank" rel="noreferrer">See my work &rarr; @oaln04</a>
         <br>
         <button class="cta" type="button" data-scroll-target="#interest-form">Secure my spot</button>
       </section>
@@ -370,9 +515,9 @@
       <div class="lead-panel">
         <section class="social-proof" aria-label="Social proof">
           <ul>
-            <li>🔥 "Real transformations, documented on TikTok"</li>
-            <li>📍 "Based in the UAE, coaching globally"</li>
-            <li>⏳ "Limited spots — early list gets first access"</li>
+            <li>Real transformations, documented on TikTok</li>
+            <li>Based in the UAE, coaching globally</li>
+            <li>Limited spots &mdash; early list gets first access</li>
           </ul>
         </section>
 
@@ -422,7 +567,7 @@
     </main>
 
     <footer class="footer">
-      © 2026 Omar Al Nuaimi · <a href="https://www.tiktok.com/@oaln04" target="_blank" rel="noreferrer">@oaln04 on TikTok</a>
+      &copy; 2026 Omar Al Nuaimi &middot; <a href="https://www.tiktok.com/@oaln04" target="_blank" rel="noreferrer">@oaln04 on TikTok</a>
     </footer>
   </div>
 
@@ -455,17 +600,25 @@
     }
 
     function setSuccessStatus() {
+      const icon = document.createElement("span");
+      icon.className = "success-icon";
+      icon.setAttribute("aria-hidden", "true");
+      icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" role="img"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M7 12.5l3.2 3.2L17.5 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+      const message = document.createElement("span");
       const link = document.createElement("a");
       link.href = "https://www.tiktok.com/@oaln04";
       link.target = "_blank";
       link.rel = "noreferrer";
       link.textContent = "@oaln04";
 
-      statusEl.replaceChildren(
-        document.createTextNode("You're in. When coaching drops, you'll be first to know. Until then — follow the journey "),
+      message.append(
+        document.createTextNode("You're in. When coaching drops, you'll be first to know. Until then \u2014 follow the journey "),
         link,
         document.createTextNode(" on TikTok."),
       );
+
+      statusEl.replaceChildren(icon, message);
       statusEl.dataset.state = "success";
     }
 
@@ -514,7 +667,9 @@
     });
 
     goalEl.addEventListener("input", () => {
-      goalCountEl.textContent = `${goalEl.value.length}/300`;
+      const goalLength = goalEl.value.length;
+      goalCountEl.textContent = `${goalLength}/300`;
+      goalCountEl.classList.toggle("near-limit", goalLength >= 260);
     });
 
     form.addEventListener("submit", async (event) => {
@@ -555,6 +710,7 @@
 
         form.reset();
         goalCountEl.textContent = "0/300";
+        goalCountEl.classList.remove("near-limit");
         Object.keys(errors).forEach((field) => setError(field, ""));
         setSuccessStatus();
       } catch (error) {
